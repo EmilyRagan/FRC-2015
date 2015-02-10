@@ -19,10 +19,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class RobotTemplate extends IterativeRobot {
-    Joystick leftDrive = new Joystick(0);
-    Joystick rightDrive = new Joystick(1);
-    //Joystick liftStick = new Joystick();
+public class RobotCode extends IterativeRobot {
+    Joystick drive = new Joystick();
+    
     RobotDrive mainDrive = new RobotDrive(0,1);
     /**
      * This function is run when the robot is first started up and should be
