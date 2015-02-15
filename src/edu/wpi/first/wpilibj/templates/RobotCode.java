@@ -11,6 +11,8 @@ package edu.wpi.first.wpilibj.templates;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,15 +22,23 @@ import edu.wpi.first.wpilibj.RobotDrive;
  * directory.
  */
 public class RobotCode extends IterativeRobot {
-    Joystick drive = new Joystick();
-    
-    RobotDrive mainDrive = new RobotDrive(0,1);
+    Joystick Xbox = new Joystick(1);
+    Talon leftMotor = new Talon(0);
+    Talon rightMotor = new Talon(1);
+    /*RobotDrive does things together, and I'm pretty sure I need to delcare the
+     *motors separately so that I can regulate speed not at the same for both
+     *motors.*/
+     RobotDrive mainDrive = new RobotDrive(0,1);
+     
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-
+        //when and where and how should throttle and turn be declared?
+        
+        //test to see if the robot can do anything
+        mainDrive.tankDrive(1.0, 1.0);
     }
 
     /**
@@ -53,6 +63,16 @@ public class RobotCode extends IterativeRobot {
          * Xbox controller or with joystick already mounted
          * to driver control station.
          */
+        
+        //http://wpilib.screenstepslive.com/s/3120/m/7912/l/95588-getting-your-robot-to-drive-with-the-robotdrive-class
+        //unnecessary because teleopPeriodic is called 50x/sec
+        /*while (isOperatorControl() && isEnabled()) {
+            mainDrive.arcadeDrive(Xbox);
+            Timer.delay(0.01);
+        }*/
+        
+        //remember that "forward" on Y-axis is -1.0, while right on X-axis is 1.0
+        mainDrive.arcadeDrive(Xbox);
     }
     
     /**
@@ -62,4 +82,10 @@ public class RobotCode extends IterativeRobot {
     
     }
     
+    /*Test by Mr. Johnson - unsuccessful
+     *public static void main(String args[]) {
+     *    System.out.print("hello");
+        
+    }
+     */
 }
