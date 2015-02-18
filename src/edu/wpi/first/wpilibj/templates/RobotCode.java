@@ -22,30 +22,30 @@ import edu.wpi.first.wpilibj.Timer;
  * directory.
  */
 public class RobotCode extends IterativeRobot {
-    Joystick Xbox = new Joystick(1);
+    //individual motors need to be delcared because we are using Talons, and RobotDrive assumes Jaguars
     Talon leftMotor = new Talon(0);
     Talon rightMotor = new Talon(1);
-    /*RobotDrive does things together, and I'm pretty sure I need to delcare the
-     *motors separately so that I can regulate speed not at the same for both
-     *motors.*/
-     RobotDrive mainDrive = new RobotDrive(0,1);
+    RobotDrive mainDrive = new RobotDrive(leftMotor, rightMotor);
+    //joystick numbers correspond with USB channels
+    Joystick move = new Joystick(1);
+    Joystick lift = new Joystick(2);
      
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        //when and where and how should throttle and turn be declared?
         
-        //test to see if the robot can do anything
-        mainDrive.tankDrive(1.0, 1.0);
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-
+        mainDrive.setSafetyEnabled(false);
+        mainDrive.drive(-0.5, 0.0);
+        Timer.delay(2.0);
+        mainDrive.drive(0.0, 0.0);
     }
 
     /**
@@ -65,14 +65,14 @@ public class RobotCode extends IterativeRobot {
          */
         
         //http://wpilib.screenstepslive.com/s/3120/m/7912/l/95588-getting-your-robot-to-drive-with-the-robotdrive-class
-        //unnecessary because teleopPeriodic is called 50x/sec
-        /*while (isOperatorControl() && isEnabled()) {
-            mainDrive.arcadeDrive(Xbox);
+        mainDrive.setSafetyEnabled(true);
+        while (isOperatorControl() && isEnabled()) {
+            mainDrive.arcadeDrive(move);
             Timer.delay(0.01);
-        }*/
+        }
         
         //remember that "forward" on Y-axis is -1.0, while right on X-axis is 1.0
-        mainDrive.arcadeDrive(Xbox);
+        mainDrive.arcadeDrive(move);
     }
     
     /**
